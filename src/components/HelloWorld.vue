@@ -4,7 +4,7 @@
     :style="OUTER_STYLE">
       <div class="inner"
       :style="INNER_STYLE">
-      <div>
+        <div>
           <ul>
             <li>innerCardHeight: {{innerCardHeight}}</li>
             <li>innerCardMaxHeight: {{innerCardMaxHeight}}</li>
@@ -14,6 +14,11 @@
           <ul>
             <li>outer: {{outer}}</li>
             <li>inner: {{inner}}</li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li>cardSize: {{cardSize}}</li>
           </ul>
         </div>
         <v-checkbox v-model="cardWidthAuto"
@@ -26,8 +31,10 @@
             v-model="dialog" 
             transition="fade-transition"
             :width="'auto'"
-            :max-width="'80%'">
+            :max-width="'80%'"
+            @keydown="getICardRef">
             <v-card
+              ref="iCard"
               class="dialog-card"
               :class="{'dialog-card-auto': cardWidthAuto}"
               :height="innerCardHeight"
@@ -49,10 +56,12 @@
       ratio: "1/1",
       dialog: false,
       cardWidthAuto: true,
+      cardSize: {x: 0, y: 0},
     }),
 
     mounted() {
       this.onResize();
+      console.log(this.$refs.iCard);
     },
 
     computed: {
@@ -90,9 +99,15 @@
       onResize: function() {
         this.inner = {x: window.innerWidth, y: window.innerHeight}
         this.outer = {x: window.outerWidth, y: window.outerHeight}
+        this.getICardRef();
       },
       dialogOpen: function() {
         this.dialog = true
+      },
+      getICardRef: function() {
+        const el = this.$refs.iCard.$el;
+        console.log(el)
+        this.cardSize = {x: el.clientWidth, y: el.clientHeight}
       }
     }
 
