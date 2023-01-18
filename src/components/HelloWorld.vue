@@ -1,58 +1,77 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <v-container v-resize="onResize" class="pa-0" fluid>
+    <div class="outer"
+    :style="OUTER_STYLE">
+      <div class="inner"
+      :style="INNER_STYLE">
+        <div>
+          <ul>
+            <li>outer: {{outer}}</li>
+            <li>inner: {{inner}}</li>
+          </ul>
+        </div>
+        <v-text-field v-model="ratio" solo></v-text-field>
+        <div class="aspect-test" :style="AS_STYLE"></div>
+      </div>
+    </div>
+  </v-container>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  export default {
+    name: 'HelloWorld',
+    data: () => ({
+      inner: {x: 0, y: 0},
+      outer: {x: 0, y: 0},
+      ratio: "1/1"
+    }),
+
+    mounted() {
+      this.onResize();
+    },
+
+    computed: {
+      OUTER_STYLE(){
+        const width = this.outer.x + "px";
+        const height = this.outer.y + "px";
+        console.log(width, height)
+        return {width, height}
+      },
+      INNER_STYLE(){
+        const width = this.inner.x + "px";
+        const height = this.inner.y + "px";
+        console.log(width, height)
+        return {width, height}
+      },
+      AS_STYLE() {
+        const height = this.inner.y / 5 + "px";
+        const aspectRatio = this.ratio
+        console.log(height, aspectRatio)
+        return {height, aspectRatio}
+      }
+    },
+
+    methods: {
+      onResize: function() {
+        this.inner = {x: window.innerWidth, y: window.innerHeight}
+        this.outer = {x: window.outerWidth, y: window.outerHeight}
+      }
+    }
+
   }
-}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  .outer{
+    background-color: antiquewhite;
+  }
+  .inner{
+    background-color: cadetblue;
+  }
+  .aspect-test{
+    background-color: yellowgreen;
+  }
+  .aspect-test:before{
+    content: '';
+  }
 </style>
