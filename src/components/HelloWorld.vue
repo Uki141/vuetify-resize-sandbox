@@ -12,6 +12,19 @@
         </div>
         <v-text-field v-model="ratio" solo></v-text-field>
         <div class="aspect-test" :style="AS_STYLE"></div>
+        <div class="dialog-area">
+          <v-btn @click="dialogOpen">Dialog</v-btn>
+          <v-dialog 
+            v-model="dialog" 
+            transition="fade-transition"
+            :width="'auto'"
+            :max-width="'80%'">
+            <v-card
+              class="dialog-card"
+              :height="innerCardHeight"
+              :max-height="innerCardMaxHeight"></v-card>
+          </v-dialog>
+        </div>
       </div>
     </div>
   </v-container>
@@ -23,7 +36,8 @@
     data: () => ({
       inner: {x: 0, y: 0},
       outer: {x: 0, y: 0},
-      ratio: "1/1"
+      ratio: "1/1",
+      dialog: false,
     }),
 
     mounted() {
@@ -48,6 +62,16 @@
         const aspectRatio = this.ratio
         console.log(height, aspectRatio)
         return {height, aspectRatio}
+      },
+
+      innerCardHeight: function() {
+        const aspectRatio = 4/3;
+        let width = this.inner.x;
+        const height = width / aspectRatio;
+        return height
+      },
+      innerCardMaxHeight: function() {
+        return Math.floor(this.inner.y * 0.9)
       }
     },
 
@@ -55,6 +79,9 @@
       onResize: function() {
         this.inner = {x: window.innerWidth, y: window.innerHeight}
         this.outer = {x: window.outerWidth, y: window.outerHeight}
+      },
+      dialogOpen: function() {
+        this.dialog = true
       }
     }
 
@@ -73,5 +100,11 @@
   }
   .aspect-test:before{
     content: '';
+  }
+  .dialog-card{
+    aspect-ratio: 4/3;
+  }
+  .dialog-card:before{
+    content: ''
   }
 </style>
