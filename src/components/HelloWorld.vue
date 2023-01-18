@@ -29,7 +29,7 @@
             :max-width="'80%'">
             <v-card
               class="dialog-card"
-              :width="innerCardWidth"
+              :class="{'dialog-card-auto': cardWidthAuto}"
               :height="innerCardHeight"
               :max-height="innerCardMaxHeight"></v-card>
           </v-dialog>
@@ -83,9 +83,6 @@
       },
       innerCardMaxHeight: function() {
         return Math.floor(this.inner.y * 0.9)
-      },
-      innerCardWidth: function() {
-        return this.cardWidthAuto ? "auto" : null;
       }
     },
 
@@ -121,5 +118,8 @@
   }
   .dialog-card:before{
     content: ''
+  }
+  .dialog-card-auto{
+    width: auto;
   }
 </style>
