@@ -18,6 +18,7 @@
         </div>
         <div>
           <ul>
+            <li>outerCardSize: {{outerCardSize}}</li>
             <li>cardSize: {{cardSize}}</li>
           </ul>
         </div>
@@ -28,11 +29,12 @@
         <div class="dialog-area">
           <v-btn @click="dialogOpen">Dialog</v-btn>
           <v-dialog 
+            ref="oCard"
             v-model="dialog" 
             transition="fade-transition"
-            :width="'auto'"
+            :width="'min-content'"
             :max-width="'80%'"
-            @keydown="getICardRef">
+            @keydown="getCardRef">
             <v-card
               ref="iCard"
               class="dialog-card"
@@ -57,6 +59,7 @@
       dialog: false,
       cardWidthAuto: true,
       cardSize: {x: 0, y: 0},
+      outerCardSize: {x: 0, y: 0}
     }),
 
     mounted() {
@@ -99,15 +102,19 @@
       onResize: function() {
         this.inner = {x: window.innerWidth, y: window.innerHeight}
         this.outer = {x: window.outerWidth, y: window.outerHeight}
-        this.getICardRef();
+        this.getCardRef();
       },
       dialogOpen: function() {
         this.dialog = true
+        this.getCardRef();
       },
-      getICardRef: function() {
-        const el = this.$refs.iCard.$el;
-        console.log(el)
-        this.cardSize = {x: el.clientWidth, y: el.clientHeight}
+      getCardRef: function() {
+        const iel = this.$refs.iCard.$el;
+        console.log(iel)
+        this.cardSize = {x: iel.clientWidth, y: iel.clientHeight}
+        const oel = this.$refs.oCard.$el;
+        console.log(oel);
+        this.outerCardSize = {x: oel.clientWidth, y: oel.clientHeight}
       }
     }
 
