@@ -16,6 +16,8 @@
             <li>inner: {{inner}}</li>
           </ul>
         </div>
+        <v-checkbox v-model="cardWidthAuto"
+         :label="`dialog card width:auto`"></v-checkbox>
         <v-text-field v-model="ratio" solo></v-text-field>
         <div class="aspect-test" :style="AS_STYLE"></div>
         <div class="dialog-area">
@@ -27,6 +29,7 @@
             :max-width="'80%'">
             <v-card
               class="dialog-card"
+              :width="innerCardWidth"
               :height="innerCardHeight"
               :max-height="innerCardMaxHeight"></v-card>
           </v-dialog>
@@ -45,6 +48,7 @@
       outer: {x: 0, y: 0},
       ratio: "1/1",
       dialog: false,
+      cardWidthAuto: true,
     }),
 
     mounted() {
@@ -79,6 +83,9 @@
       },
       innerCardMaxHeight: function() {
         return Math.floor(this.inner.y * 0.9)
+      },
+      innerCardWidth: function() {
+        return this.cardWidthAuto ? "auto" : null;
       }
     },
 
@@ -110,7 +117,7 @@
   }
   .dialog-card{
     aspect-ratio: 4/3;
-    width: auto;
+    overflow: auto;
   }
   .dialog-card:before{
     content: ''
