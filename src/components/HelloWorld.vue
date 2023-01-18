@@ -110,6 +110,7 @@
   }
   .dialog-card{
     aspect-ratio: 4/3;
+    width: auto;
   }
   .dialog-card:before{
     content: ''
