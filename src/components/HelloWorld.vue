@@ -4,6 +4,12 @@
     :style="OUTER_STYLE">
       <div class="inner"
       :style="INNER_STYLE">
+      <div>
+          <ul>
+            <li>innerCardHeight: {{innerCardHeight}}</li>
+            <li>innerCardMaxHeight: {{innerCardMaxHeight}}</li>
+          </ul>
+        </div>
         <div>
           <ul>
             <li>outer: {{outer}}</li>
@@ -25,6 +31,7 @@
               :max-height="innerCardMaxHeight"></v-card>
           </v-dialog>
         </div>
+        
       </div>
     </div>
   </v-container>
