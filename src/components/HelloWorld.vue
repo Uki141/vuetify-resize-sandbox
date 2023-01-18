@@ -32,7 +32,7 @@
             ref="oCard"
             v-model="dialog" 
             transition="fade-transition"
-            :width="'min-content'"
+            :width="undefined"
             :max-width="'80%'"
             @keydown="getCardRef">
             <v-card
