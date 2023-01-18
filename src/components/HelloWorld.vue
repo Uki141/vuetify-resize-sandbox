@@ -130,6 +130,7 @@
   .dialog-card{
     aspect-ratio: 4/3;
     overflow: auto;
+    width: 100%;
   }
   .dialog-card:before{
     content: ''
